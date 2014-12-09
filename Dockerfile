@@ -12,6 +12,20 @@ RUN curl -O http://autoinstall.plesk.com/plesk-installer
 RUN chmod +x plesk-installer
 CMD ["/plesk-installer"]
 
+RUN /usr/local/psa/bin/init_conf --init \
+	-email john@doe.com \
+	-passwd 1q2w3e \
+	-company Parallels \
+	-name Default_Administrator_Name \
+	-phone 123456789 -address Red-Square/4 \
+	-city Moscow -state Moscow -zip 630000 \
+	-country RU -license_agreed true
+
+#RUN /usr/local/psa/bin/ipmanage --update %s -type shared
+
+ADD ppp_multi_version_unix_key.xml /root/
+RUN /usr/local/psa/admin/sbin/keymng --install --source-file /root/ppp_multi_version_unix_key.xml
+
 # http://kb.sp.parallels.com/ru/391
 EXPOSE 20 
 EXPOSE 21 
@@ -35,4 +49,3 @@ EXPOSE 8443
 EXPOSE 8447
 EXPOSE 8880
 EXPOSE 9080
-
