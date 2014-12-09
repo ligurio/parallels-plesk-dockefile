@@ -7,6 +7,4 @@ Run this [Parallels Plesk Panel](http://sp.parallels.com/products/plesk/) image 
     $ docker build -t sergeyb/plesk parallels-plesk-dockefile/
     $ docker run -name plesk -i -t sergeyb/plesk
 
-or use Dockefile right from Github:
-
-    $ docker build -t sergeyb/plesk \ git@github.com:ligurio/parallels-plesk-dockefile
+Author: Sergey Bronnikov [@estet](https://twitter.com/estet) (estetus@gmail.com)
