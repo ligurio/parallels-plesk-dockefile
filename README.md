@@ -1,10 +1,8 @@
-Run this [Parallels Plesk](http://sp.parallels.com/products/plesk/) image with:
+Run this [Parallels Plesk Panel](http://sp.parallels.com/products/plesk/) image with:
 
-    $ docker run -d --name plesk-0 ligurio/parallels-plesk
+    $ docker build -t sergeyb/plesk \ git@github.com:ligurio/parallels-plesk-dockefile
 
-Then [link][linking] to it from your client container:
-
-    $ docker run --link plesk-0:plesk your-client
+    $ docker build -t sergeyb/plesk parallels-plesk-dockefile/
 
 [Parallels Plesk]: http://sp.parallels.com/products/plesk/
 [Installation Guide]: http://download1.parallels.com/Plesk/Doc/en-US/online/plesk-installation-upgrade-migration-guide/
