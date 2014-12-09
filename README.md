@@ -1,5 +1,5 @@
 Request trial license key [here](http://sp.parallels.com/products/plesk/trial/)
-and keep it with name ```plesk_12_license_key.xml```
+and keep it with name ```ppp_multi_version_unix_key.xml```
 
 Run this [Parallels Plesk Panel](http://sp.parallels.com/products/plesk/) image with:
 
