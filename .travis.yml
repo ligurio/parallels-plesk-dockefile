@@ -9,5 +9,6 @@ install:
   - sudo apt-get install -y lxc-docker
 
 script:
-  - docker build -t sergeyb/plesk parallels-plesk-dockefile/
-  - docker run -name plesk -i -t sergeyb/plesk
+  - ls -la
+  - sudo docker build -t sergeyb/plesk parallels-plesk-dockefile/
+  - sudo docker run --name plesk -i -t sergeyb/plesk
