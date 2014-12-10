@@ -1,3 +1,6 @@
+# Install Parallels Plesk Panel Following the Instructions at Parallels website
+# Ref: http://download1.parallels.com/Plesk/Doc/en-US/online/plesk-installation-upgrade-migration-guide/
+
 FROM ubuntu:14.04
 MAINTAINER Sergey Bronnikov "sergeyb@parallels.com"
 
