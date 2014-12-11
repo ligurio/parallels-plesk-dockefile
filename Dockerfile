@@ -40,8 +40,8 @@ ADD ppp_multi_version_unix_key.xml /root/
 RUN /usr/local/psa/admin/sbin/keymng --install --source-file /root/ppp_multi_version_unix_key.xml
 
 # http://kb.sp.parallels.com/ru/391
-EXPOSE 20 
-EXPOSE 21 
+EXPOSE 20
+EXPOSE 21
 EXPOSE 25
 EXPOSE 53
 EXPOSE 80
