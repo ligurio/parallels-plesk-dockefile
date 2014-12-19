@@ -4,35 +4,52 @@
 FROM ubuntu:14.04
 MAINTAINER Sergey Bronnikov "sergeyb@parallels.com"
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" >> /etc/apt/sources.list
-RUN apt-get -y update
-RUN apt-get -y install curl
+ENV PLESK_DISABLE_HOSTNAME_CHECKING yes
+
+# http://kb.sp.parallels.com/en/397
+ENTRYPOINT umount /etc/hosts && hostname plesk.ubuntu.com && bash
+ENTRYPOINT umount /etc/hosts && echo '127.0.0.1 plesk.ubuntu.com' > /etc/hosts && bash
+RUN echo "127.0.0.1	plesk.parallels.com" | sudo tee -a /etc/hosts
 
 RUN locale-gen en_US en_US.UTF-8
 RUN dpkg-reconfigure locales
 
-# http://kb.sp.parallels.com/en/397
-RUN echo "127.0.0.1	plesk.parallels.com" | sudo tee -a /etc/hosts
+RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" >> /etc/apt/sources.list
+RUN apt-get -y update
+RUN apt-get -y install curl
 
 RUN curl -O http://autoinstall.plesk.com/Parallels_Installer/parallels_installer_Ubuntu_14.04_x86_64
 RUN chmod +x parallels_installer_Ubuntu_14.04_x86_64
+
+RUN mkdir -p /etc/mysql/conf.d/
+RUN echo "[mysqld]"                       > /etc/mysql/conf.d/docker.cnf
+RUN echo "bind-address   = 0.0.0.0"      >> /etc/mysql/conf.d/docker.cnf
+RUN echo "innodb_flush_method = O_DSYNC" >> /etc/mysql/conf.d/docker.cnf
+RUN echo "skip-name-resolve"             >> /etc/mysql/conf.d/docker.cnf
+RUN echo "init_file = /etc/mysql/init"   >> /etc/mysql/conf.d/docker.cnf
+RUN echo "GRANT ALL ON *.* TO root@'%'" >   /etc/mysql/init
 
 # ./parallels_installer_Ubuntu_14.04_x86_64 --show-all-releases
 # ./parallels_installer_Ubuntu_14.04_x86_64 --select-product-id plesk --select-release-latest --show-components
 # Full, Typical, Custom
 
+#RUN ./parallels_installer_Ubuntu_14.04_x86_64 	\
+#	--select-product-id plesk 		\
+#	--select-release-latest 		\
+#	--installation-type Full
+
 RUN ./parallels_installer_Ubuntu_14.04_x86_64 	\
 	--select-product-id plesk 		\
 	--select-release-latest 		\
-	--installation-type Full
+	--install-component 	common
 
-RUN /usr/local/psa/bin/init_conf --init \
-	-email john@doe.com 		\
-	-passwd WozXSDvT/9HtyAmyma6W7g= \
-	-company "Parallels Inc."	\
-	-name Administrator		\
-	-phone 123456789 -address Red-Square/4 \
-	-city Moscow -state Moscow -zip 630000 \
+RUN /usr/local/psa/bin/init_conf --init 	\
+	-email john@doe.com 			\
+	-passwd WozXSDvT/9HtyAmyma6W7g= 	\
+	-company "Parallels Inc."		\
+	-name Administrator			\
+	-phone 123456789 -address Red-Square/4 	\
+	-city Moscow -state Moscow -zip 630000 	\
 	-country RU -license_agreed true
 
 #RUN /usr/local/psa/bin/ipmanage --update %s -type shared
@@ -63,6 +80,8 @@ EXPOSE 8443
 EXPOSE 8447
 EXPOSE 8880
 EXPOSE 9080
+
+COMMAND /etc/init.d/psa start
 
 # Plesk components:
 #  common            [install] - Base packages of Parallels Plesk Panel
