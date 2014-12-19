@@ -11,6 +11,7 @@ RUN apt-get -y install curl
 RUN locale-gen en_US en_US.UTF-8
 RUN dpkg-reconfigure locales
 
+# http://kb.sp.parallels.com/en/397
 RUN echo "127.0.0.1	plesk.parallels.com" | sudo tee -a /etc/hosts
 
 RUN curl -O http://autoinstall.plesk.com/Parallels_Installer/parallels_installer_Ubuntu_14.04_x86_64
