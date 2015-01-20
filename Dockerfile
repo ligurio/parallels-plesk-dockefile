@@ -18,8 +18,10 @@ ENV PLESK_ZIP 127081
 ENV PLESK_COUNTRY RU
 ENV PLESK_IPRANGE 192.168.1.1
 
+# http://kb.sp.parallels.com/en/397
 ENTRYPOINT umount /etc/hosts && hostname plesk.ubuntu.com && bash
 ENTRYPOINT umount /etc/hosts && echo '127.0.0.1 plesk.ubuntu.com' > /etc/hosts && bash
+RUN echo "127.0.0.1	plesk.parallels.com" | sudo tee -a /etc/hosts
 
 RUN locale-gen en_US en_US.UTF-8
 RUN dpkg-reconfigure locales
