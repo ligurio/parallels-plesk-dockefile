@@ -8,8 +8,8 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV PLESK_DISABLE_HOSTNAME_CHECKING yes
 ENV PLESK_EMAIL john@doe.com
 ENV PLESK_PASSWORD WozXSDvT/9HtyAmyma6W7g=
-ENV PLESK_COMPANY JohnDoe
-ENV PLESK_NAME Administator
+ENV PLESK_COMPANY "John Doe company"
+ENV PLESK_NAME "John Doe"
 ENV PLESK_PHONE 123456789
 ENV PLESK_ADDRESS Red-Square
 ENV PLESK_CITY Moscow
@@ -19,9 +19,9 @@ ENV PLESK_COUNTRY RU
 ENV PLESK_IPRANGE 192.168.1.1
 
 # http://kb.sp.parallels.com/en/397
-ENTRYPOINT umount /etc/hosts && hostname plesk.ubuntu.com && bash
-ENTRYPOINT umount /etc/hosts && echo '127.0.0.1 plesk.ubuntu.com' > /etc/hosts && bash
-RUN echo "127.0.0.1	plesk.parallels.com" | sudo tee -a /etc/hosts
+#ENTRYPOINT umount /etc/hosts && hostname plesk.ubuntu.com && bash
+#ENTRYPOINT umount /etc/hosts && echo '127.0.0.1 plesk.ubuntu.com' > /etc/hosts && bash
+#RUN echo "127.0.0.1	plesk.parallels.com" | sudo tee -a /etc/hosts
 
 RUN locale-gen en_US en_US.UTF-8
 RUN dpkg-reconfigure locales
@@ -46,26 +46,10 @@ RUN ./parallels_installer_Ubuntu_14.04_x86_64 	\
 	--select-release-latest 		\
 	--install-component common
 
-RUN /usr/local/psa/bin/init_conf --init 	\
-	-email PLESK_EMAIL			\
-	-passwd PLESK_PASSWORD			\
-	-company PLESK_COMPANY			\
-	-name PLESK_NAME 			\
-	-phone PLESK_PHONE			\
-	-address PLESK_ADDRESS			\
-	-city PLESK_CITY			\
-	-state PLESK_STATE			\
-	-zip PLESK_ZIP				\
-	-country PLESK_COUNTRY			\
-	-license_agreed true
-
-# http://download1.parallels.com/Plesk/PP11/11.1/Doc/en-US/online/plesk-unix-cli/index.htm?fileName=39008.htm
-RUN /usr/local/psa/bin/ipmanage --update PLESK_IPRANGE -type shared
-
 ADD ppp_multi_version_unix_key.xml /root/
-RUN /usr/local/psa/admin/sbin/keymng --install --source-file /root/ppp_multi_version_unix_key.xml
 
 # http://kb.sp.parallels.com/ru/391
 EXPOSE 8880
 
-COMMAND /etc/init.d/psa start
+ADD ./start.sh /start.sh
+RUN chmod 755 /start.sh
