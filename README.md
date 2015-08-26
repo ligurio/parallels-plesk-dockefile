@@ -1,3 +1,5 @@
+*Plesk Team made official [Dockerfile for Plesk Panel](https://github.com/plesk/docker)*
+
 Request trial license key [here](http://sp.parallels.com/products/plesk/trial/)
 and keep it with name ```ppp_multi_version_unix_key.xml```
 
