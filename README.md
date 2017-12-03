@@ -3,7 +3,7 @@
 Request trial license key [here](http://sp.parallels.com/products/plesk/trial/)
 and keep it with name ```ppp_multi_version_unix_key.xml```
 
-Run this [Parallels Plesk Panel](http://sp.parallels.com/products/plesk/) image with:
+Run this [Parallels Plesk Panel](https://support.plesk.com/hc/en-us/articles/213912465-How-to-get-a-trial-license-for-Plesk-) image with:
 
     $ git clone https://github.com/ligurio/parallels-plesk-dockefile
     $ cd parallels-plesk-dockefile
